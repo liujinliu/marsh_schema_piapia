@@ -14,9 +14,9 @@ class BaseSchemaItem:
     def code_gen(self):
         inner = []
         if self.dump_to:
-            inner.append(f'dump_to={self.dump_to}')
+            inner.append(f"dump_to='{self.dump_to}'")  # NOQA
         if self.load_from:
-            inner.append(f'load_from={self.load_from}')
+            inner.append(f"dump_to='{self.dump_to}'")  # NOQA
         inner_str = ', '.join(inner) if inner else ''
         return f'{self.name} = {self.__class__.SCHEMA_NAME}({inner_str})'
 
@@ -59,9 +59,9 @@ class NestSchemaItem():
     def code_gen(self):
         inner = [f'{self.sub_schema_code.name}']
         if self.dump_to:
-            inner.append(f'dump_to={self.dump_to}')
+            inner.append(f"dump_to='{self.dump_to}'")  # NOQA
         if self.load_from:
-            inner.append(f'load_from={self.load_from}')
+            inner.append(f"load_from='{self.load_from}'")  # NOQA
         inner.append(f'many={self.many}')
         inner_str = ', '.join(inner)
         return f'{self.name} = {self.__class__.SCHEMA_NAME}({inner_str})'
