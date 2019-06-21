@@ -18,7 +18,7 @@ class BaseSchemaItem:
         if self.load_from:
             inner.append(f'load_from={self.load_from}')
         inner_str = ', '.join(inner) if inner else ''
-        return f'{self.name}={self.__class__.SCHEMA_NAME}({inner_str})'
+        return f'{self.name} = {self.__class__.SCHEMA_NAME}({inner_str})'
 
 
 class IntSchemaItem(BaseSchemaItem):
@@ -64,4 +64,4 @@ class NestSchemaItem():
             inner.append(f'load_from={self.load_from}')
         inner.append(f'many={self.many}')
         inner_str = ', '.join(inner)
-        return f'{self.name}={self.__class__.SCHEMA_NAME}({inner_str})'
+        return f'{self.name} = {self.__class__.SCHEMA_NAME}({inner_str})'

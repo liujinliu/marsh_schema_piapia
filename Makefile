@@ -35,5 +35,4 @@ lint:
 
 test:
 	@[ -n "$(VIRTUAL_ENV)" ] || (echo 'out of virtualenv'; exit 1)
-	coverage erase
-	coverage run -m pytest tests -p no:warnings
+	env PYTEST_ADDOPTS="-s" pytest tests -p no:warnings
