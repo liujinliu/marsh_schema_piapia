@@ -24,7 +24,7 @@ def test_schema_code_gen():
     b = base_schema.IntSchemaItem('user_age', dump_to='userAge')
     c = base_schema.BoolSchemaItem('user_vip', dump_to='userVip')
     item_list = [a, b, c]
-    schema_code_gen = base_schema.SchemaCodeGen('UserInfo', item_list)
+    schema_code_gen = base_schema.SchemaCodeGen('user_info', item_list)  # NOQA
     assert(schema_code_gen.code_gen() ==
            ('class UserInfo(Schema):\n'
             '    username = fields.String()\n'
@@ -36,5 +36,19 @@ def test_nested_schema():
     item0 = base_schema.BaseSchemaItem('username')
     item1 = base_schema.IntSchemaItem('user_age', dump_to='userAge')
     schema_code_gen = base_schema.SchemaCodeGen('UserInfo', [item0, item1])
-    a = base_schema.NestSchemaItem('retInfo', schema_code_gen, many=False)
+    a = base_schema.NestSchemaItem('retInfo', schema_code_gen, many=False)  # NOQA
+    # assert(a.code_gen() ==
+    #        ('class UserInfo(Schema):\n'
+    #         '    username = fields.String()\n'
+    #         "    user_age = fields.Integer(dump_to='userAge')\n\n\n"
+    #         'retInfo = fields.Nested(UserInfo, many=False)'))
     assert(a.code_gen() == 'retInfo = fields.Nested(UserInfo, many=False)')
+
+
+def test_dict2schema():
+    paras = {'user_name': 'liujinliu',
+             'user_age': {'real': 33, 'pub': [{'p0': 11, 'p1': 12},
+                                              {'p0': 11, 'p1': 12}]},
+             'user_vip': True}
+    a = base_schema.dict2schemas(paras, 'data')
+    print('\n' + a.code_gen())  # NOQA
