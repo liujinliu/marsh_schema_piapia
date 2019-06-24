@@ -10,7 +10,17 @@ pip install marsh_schema_piapia
 
 tmp.json文件内容如下
 ```
-{"user_name": "liujinliu", "user_age": {"real": 33, "pub": [{"p0": 11, "p1": 12}, {"p0": 11, "p1": 12}]}, "user_vip": true}
+{
+    "user_name": "liujinliu",
+    "user_age": {
+        "real": 33,
+        "pub": [
+            {"p0": 11, "p1": 12},
+            {"p0": 11, "p1": 12}
+        ]
+    },
+    "user_vip": true
+}
 ```
 
 将上述文件转化为对应的schema代码
