@@ -27,4 +27,9 @@ setup(
     url='',
     packages=find_packages(),
     install_requires=parse_requirements('requirements.txt'),
+    entry_points={
+        'console_scripts': [
+            'json2marshschema=marsh_schema_piapia.cmd:json2schemas',
+        ],
+    },
 )
