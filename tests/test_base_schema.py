@@ -47,8 +47,10 @@ def test_nested_schema():
 
 def test_dict2schema():
     paras = {'user_name': 'liujinliu',
-             'user_age': {'real': 33, 'pub': [{'p0': 11, 'p1': 12},
-                                              {'p0': 11, 'p1': 12}]},
+             'user_age0': {'real': 33, 'pub': [{'p0': 11, 'p1': 12},
+                                               {'p0': 11, 'p1': 12}]},
+             'user_age1': {'real': 33, 'pub': [{'p0': 11, 'p1': 12},
+                                               {'p0': 11, 'p1': 12}]},
              'user_vip': True}
     a = base_schema.dict2schemas(paras, 'data')
     print('\n' + a.code_gen())  # NOQA
