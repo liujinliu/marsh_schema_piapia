@@ -48,16 +48,16 @@ class NestSchemaItem():
 
     SCHEMA_NAME = 'fields.Nested'
 
-    def __init__(self, name, sub_schema_code: SchemaCodeGen,
+    def __init__(self, name, sub_schema_code_gen: SchemaCodeGen,
                  *, dump_to=None, load_from=None, many=True):
         self.name = name
-        self.sub_schema_code = sub_schema_code
+        self.sub_schema_code_gen = sub_schema_code_gen
         self.dump_to = dump_to
         self.load_from = load_from
         self.many = many
 
     def code_gen(self):
-        inner = [f'{self.sub_schema_code.name}']
+        inner = [f'{self.sub_schema_code_gen.name}']
         if self.dump_to:
             inner.append(f"dump_to='{self.dump_to}'")  # NOQA
         if self.load_from:
