@@ -22,7 +22,7 @@ def parse_requirements(filename):
 
 setup(
     name=package,
-    version='0.0.1',
+    version='0.0.2',
     description='marsh_schema_piapia',
     url='https://github.com/liujinliu/marsh_schema_piapia',
     packages=find_packages(),
