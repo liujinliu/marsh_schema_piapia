@@ -15,6 +15,8 @@ install-deps:
 
 clean:
 	@rm -f dist/*
+	@rm -rf build
+	@rm -rf *.egg-info
 	@find . -name '*.pyc' -or -name '*.pyo' -or -name '__pycache__' -type f -delete
 	@find . -type d -empty -delete
 
