@@ -35,7 +35,7 @@ class BaseSchemaItem:
         if self.dump_to:
             inner.append(f"dump_to='{self.dump_to}'")  # NOQA
         if self.load_from:
-            inner.append(f"load_from='{self.dump_to}'")  # NOQA
+            inner.append(f"load_from='{self.load_from}'")  # NOQA
         inner_str = ', '.join(inner) if inner else ''
         return f'{self.name} = {self.__class__.SCHEMA_NAME}({inner_str})'
 
@@ -77,8 +77,10 @@ class NestSchemaItem:
 
 class SchemaCodeGen:
 
-    def __init__(self, name, item_list):
+    def __init__(self, name, item_list, *, dump_to=False, load_from=False):
         self.name = name
+        self.dump_to = dump_to
+        self.load_from = load_from
         self.item_list = sorted(
             item_list,
             key=lambda x: isinstance(x, self.__class__) or isinstance(x, NestSchemaItem), reverse=True)  # NOQA
@@ -90,8 +92,9 @@ class SchemaCodeGen:
             if isinstance(item, SchemaCodeGen) or isinstance(item, NestSchemaItem):  # NOQA
                 out_str.append(item.code_gen())
                 tmp = NestSchemaItem(
-                    item.name, item, dump_to=str2hump(item.name),
-                    load_from=str2hump(item.name))
+                    item.name, item,
+                    dump_to=str2hump(item.name) if self.dump_to else None,
+                    load_from=str2hump(item.name) if self.load_from else None)
                 inner_str.append(f'{space_4}{tmp.code_gen()}')
                 continue
             inner_str.append(f'{space_4}{item.code_gen()}')
@@ -99,29 +102,35 @@ class SchemaCodeGen:
         return '\n\n'.join(out_str)
 
 
-def dict2schemas(paras, name):
+def dict2schemas(paras, name, *, dump=True, load=True):
     item_list = []
     for k in paras:
         v = paras[k]
         item = None
         if isinstance(v, SchemaCodeGen) or isinstance(v, NestSchemaItem):
             item = NestSchemaItem(
-                str(k), v, dump_to=str2hump(str(k)),
-                load_from=str2hump(str(k)))
+                str(k), v,
+                dump_to=str2hump(str(k)) if dump else None,
+                load_from=str2hump(str(k)) if load else None)
         elif isinstance(v, int):
             item = IntSchemaItem(
-                str(k), dump_to=str2hump(str(k)), load_from=str2hump(str(k)))
+                str(k), dump_to=str2hump(str(k)) if dump else None,
+                load_from=str2hump(str(k)) if load else None)
         elif isinstance(v, bool):
             item = BoolSchemaItem(
                 str(k),
-                dump_to=str2hump(str(k)), load_from=str2hump(str(k)))
+                dump_to=str2hump(str(k)) if dump else None,
+                load_from=str2hump(str(k)) if load else None)
         elif isinstance(v, dict):
-            item = dict2schemas(v, k)
+            item = dict2schemas(v, k, dump=dump, load=load)
         elif isinstance(v, list):
-            item = dict2schemas(v[0], k)
+            item = dict2schemas(v[0], k, dump=dump, load=load)
         else:
             item = BaseSchemaItem(
                 str(k),
-                dump_to=str2hump(str(k)), load_from=str2hump(str(k)))
+                dump_to=str2hump(str(k)) if dump else None,
+                load_from=str2hump(str(k)) if load else None)
         item_list.append(item)
-    return SchemaCodeGen(name, item_list)
+    return SchemaCodeGen(
+        name, item_list,
+        dump_to=dump, load_from=load)
