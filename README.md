@@ -25,21 +25,21 @@ tmp.json文件内容如下
 
 将上述文件转化为对应的schema代码
 ```
-json2marshschema --jsonfile=tmp.json --name=data
+json2marshschema --jsonfile=tmp.json --name=data --load=true
 ```
 
 得到对应的代码如下:
 ```
 class Pub(Schema):
-    p0 = fields.Integer(dump_to='p0', load_from='p0')
-    p1 = fields.Integer(dump_to='p1', load_from='p1')
+    p0 = fields.Integer(load_from='p0')
+    p1 = fields.Integer(load_from='p1')
 
 class UserAge(Schema):
-    pub = fields.Nested(pub, dump_to='pub', load_from='pub', many=True)
-    real = fields.Integer(dump_to='real', load_from='real')
+    pub = fields.Nested(pub, load_from='pub', many=True)
+    real = fields.Integer(load_from='real')
 
 class Data(Schema):
-    user_age = fields.Nested(user_age, dump_to='userAge', load_from='userAge', many=True)
-    user_name = fields.String(dump_to='userName', load_from='userName')
-    user_vip = fields.Integer(dump_to='userVip', load_from='userVip')
+    user_age = fields.Nested(user_age, load_from='userAge', many=True)
+    user_name = fields.String(load_from='userName')
+    user_vip = fields.Integer(load_from='userVip')
 ```
