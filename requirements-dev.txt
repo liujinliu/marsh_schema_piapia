@@ -4,49 +4,19 @@
 #
 #    pip-compile --no-index --output-file=requirements-dev.txt requirements-dev.in requirements.in
 #
-atomicwrites==1.3.0       # via pytest
-attrs==19.1.0             # via flake8-bugbear, flake8-mypy, pytest
-click==7.0
-coverage==4.5.3
-cython==0.29.10
-entrypoints==0.3          # via flake8
-filelock==3.0.12          # via tox
-flake8-bugbear==19.3.0
-flake8-colors==0.1.6
-flake8-commas==2.0.0
-flake8-deprecated==1.3
-flake8-mutable==1.2.0
-flake8-mypy==17.8.0
-flake8-pep3101==1.2.1
-flake8-print==3.1.0
-flake8-quotes==2.0.1
-flake8==3.7.7
-honcho==1.0.1
-importlib-metadata==0.18  # via pluggy, pytest
-marshmallow-enum==1.4.1
-marshmallow==2.19.5
-mccabe==0.6.1             # via flake8
-more-itertools==7.0.0     # via pytest
-mypy-extensions==0.4.1    # via mypy
-mypy==0.710               # via flake8-mypy
-packaging==19.0           # via pytest
-pluggy==0.12.0            # via pytest, tox
-py==1.8.0                 # via pytest, tox
-pycodestyle==2.5.0        # via flake8, flake8-print
-pyflakes==2.1.1
-pyparsing==2.4.0          # via packaging
-pytest-dotenv==0.4.0
-pytest-mock==1.10.4
-pytest==4.6.3
-python-dotenv==0.10.3
-six==1.12.0               # via flake8-print, packaging, pytest, tox
-toml==0.10.0              # via tox
-tox==3.12.1
-typed-ast==1.4.0          # via mypy
-virtualenv==16.6.1        # via tox
-wcwidth==0.1.7            # via pytest
-werkzeug==0.15.4
-zipp==0.5.1               # via importlib-metadata
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools==41.0.1        # via tox
+click==8.1.3
+    # via -r requirements.in
+cython==0.29.33
+    # via -r requirements.in
+marshmallow==3.19.0
+    # via
+    #   -r requirements.in
+    #   marshmallow-enum
+marshmallow-enum==1.5.1
+    # via -r requirements.in
+packaging==19.0
+    # via marshmallow
+pyparsing==2.4.0
+    # via packaging
+six==1.12.0
+    # via packaging
